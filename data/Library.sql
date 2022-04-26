@@ -11,21 +11,22 @@ USE Library;
 
 
 -- -----------------------------------------------------------------------------
--- - T_Categories                        ---
+-- - T_Themes                       ---
 -- -----------------------------------------------------------------------------
-CREATE TABLE T_Categories (
-	IdCategory			int(4)		PRIMARY KEY AUTO_INCREMENT,
-	CatName			varchar(30)	NOT NULL
+CREATE TABLE T_Themes (
+	IdTheme			int(4)		PRIMARY KEY AUTO_INCREMENT,
+	ThemeName			varchar(30)	NOT NULL
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Categories ( CatName ) VALUES ( 'voyage' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'jeunesse' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'cuisine' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'poesie' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'polar' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'roman' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'petit-prix' );
-INSERT INTO T_Categories ( CatName ) VALUES ( 'meilleures ventes' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'voyage' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'jeunesse' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'cuisine' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'poesie' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'science fiction' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'polar' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'roman' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'petit-prix' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'meilleures ventes' );
 
 
 -- -----------------------------------------------------------------------------
@@ -37,24 +38,33 @@ CREATE TABLE T_Books (
 	Author				varchar(30)	NOT NULL,
 	Editor				varchar(30)	NOT NULL,
 	Description			varchar(30)	NOT NULL,
-	UnitaryPrice		float(8)	NOT NULL DEFAULT 0,
-	IdCategory 			int(4) NOT NULL,
-	CONSTRAINT `fk_category`
-    FOREIGN KEY (IdCategory) REFERENCES T_Categories (IdCategory)
+	UnitaryPrice		float(8, 2)	NOT NULL DEFAULT 0
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleOne', 'AuthorOne', 'EditorOne', 'DescriptionOne', 20, 1 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleTwo', 'AuthorTwo', 'EditorTwo', 'DescriptionTwo', 19, 5 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleThree', 'AuthorThree', 'EditorThree', 'DescriptionThree', 20.5 ,8 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleFour', 'AuthorFour', 'EditorFour', 'DescriptionFour', 22.9, 4 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleFive', 'AuthorFive', 'EditorFive', 'DescriptionFive', 15.5, 6 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleSix', 'AuthorSix', 'EditorSix', 'DescriptionSix', 18, 3 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleSeven', 'AuthorSeven', 'EditorSeven', 'DescriptionSeven', 17.9, 2 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleEight', 'AuthorEight', 'EditorEight', 'DescriptionEight', 21.9, 8 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleNine', 'AuthorNine', 'EditorNine', 'DescriptionNine', 16.9, 3 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleTen', 'AuthorTen', 'EditorTen', 'DescriptionTen', 13.5, 8 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleEleven', 'AuthorEleven', 'EditorEleven', 'DescriptionEleven', 9.9, 7 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice, idCategory ) VALUES ( 'TitleTwelve', 'AuthorTwelve', 'EditorTwelve', 'DescriptionTwelve', 8.5, 7 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleOne', 'AuthorOne', 'EditorOne', 'DescriptionOne', 20 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTwo', 'AuthorTwo', 'EditorTwo', 'DescriptionTwo', 19 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleThree', 'AuthorThree', 'EditorThree', 'DescriptionThree', 20.5 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleFour', 'AuthorFour', 'EditorFour', 'DescriptionFour', 22.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleFive', 'AuthorFive', 'EditorFive', 'DescriptionFive', 15.5 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleSix', 'AuthorSix', 'EditorSix', 'DescriptionSix', 18 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleSeven', 'AuthorSeven', 'EditorSeven', 'DescriptionSeven', 17.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleEight', 'AuthorEight', 'EditorEight', 'DescriptionEight', 21.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleNine', 'AuthorNine', 'EditorNine', 'DescriptionNine', 16.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTen', 'AuthorTen', 'EditorTen', 'DescriptionTen', 13.5);
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleEleven', 'AuthorEleven', 'EditorEleven', 'DescriptionEleven', 9.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTwelve', 'AuthorTwelve', 'EditorTwelve', 'DescriptionTwelve', 8.5 );
+
+
+-- -----------------------------------------------------------------------------
+-- - T_Books_T_Themes_Association                        ---
+-- -----------------------------------------------------------------------------
+CREATE TABLE T_Books_Themes_Association (
+	IdBook			int(4) NOT NULL		REFERENCES T_Books(IdBook),
+	IdTheme			int(4) NOT NULL		REFERENCES T_Themes(IdTheme)
+	
+) ENGINE = InnoDB;
+
+INSERT INTO T_Books_Themes_Association VALUES (1, 1 ), (1, 3), (2, 1), (2, 8), (3, 5), (4, 6), (4, 8), (5, 1), (6, 2), (6, 1), (7, 7), (8, 3), (9, 4), (9,2), (10, 1), (11, 5), (12, 3);
 
 
 -- -----------------------------------------------------------------------------
