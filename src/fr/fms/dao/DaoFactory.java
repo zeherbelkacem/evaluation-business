@@ -22,7 +22,7 @@ public class DaoFactory {
 	 * 
 	 * @return
 	 */
-	public static CategoryDao getCategoryDao() {
-		 return new CategoryDao();
+	public static ThemeDao getThemeDao() {
+		 return new ThemeDao();
 	}
 }

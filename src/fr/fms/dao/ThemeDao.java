@@ -2,30 +2,30 @@ package fr.fms.dao;
 
 import java.util.List;
 
-import fr.fms.entities.Category;
+import fr.fms.entities.Theme;
 
-public class CategoryDao implements LibraryDao<Category> {
+public class ThemeDao implements LibraryDao<Theme> {
 
 	@Override
-	public boolean create(Category t) {
+	public boolean create(Theme t) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Category> readAll() {
+	public List<Theme> readAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Category readById(int id) {
+	public Theme readById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void update(Category t) {
+	public void update(Theme t) {
 		// TODO Auto-generated method stub
 		
 	}
