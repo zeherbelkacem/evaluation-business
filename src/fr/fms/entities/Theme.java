@@ -1,13 +1,13 @@
 package fr.fms.entities;
 
-public class Category {
+public class Theme {
 	private int id;
-	private String catName;
+	private String themeName;
 
 	/**
 	 *
 	 */
-	public Category() {
+	public Theme() {
 	}
 	
 	/**
@@ -15,10 +15,10 @@ public class Category {
 	 * @param id
 	 * @param catName
 	 */
-	public Category(int id, String catName) {
+	public Theme(int id, String themeName) {
 		super();
 		this.id = id;
-		this.catName = catName;
+		this.themeName = themeName;
 	}
 
 	/**
@@ -41,16 +41,16 @@ public class Category {
 	 * 
 	 * @return
 	 */
-	public String getCatName() {
-		return catName;
+	public String getThemeName() {
+		return themeName;
 	}
 
 	/**
 	 * 
 	 * @param catName
 	 */
-	public void setCatName(String catName) {
-		this.catName = catName;
+	public void setCatName(String themeName) {
+		this.themeName = themeName;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Category {
 	 */
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", catName=" + catName + "]";
+		return "Category [id=" + id + ", themeName=" + themeName + "]";
 	}
 
 }
