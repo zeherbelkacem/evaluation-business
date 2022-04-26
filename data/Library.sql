@@ -22,6 +22,7 @@ INSERT INTO T_Themes ( ThemeName ) VALUES ( 'voyage' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'jeunesse' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'cuisine' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'poesie' );
+INSERT INTO T_Themes ( ThemeName ) VALUES ( 'science fiction' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'polar' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'roman' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'petit-prix' );
