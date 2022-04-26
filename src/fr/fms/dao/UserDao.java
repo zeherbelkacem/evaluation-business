@@ -8,7 +8,7 @@ import fr.fms.entities.User;
 public class UserDao implements LibraryDao<User> {
 
 	@Override
-	public boolean create() {
+	public boolean create(User t) {
 		// TODO Auto-generated method stub
 		return false;
 	}

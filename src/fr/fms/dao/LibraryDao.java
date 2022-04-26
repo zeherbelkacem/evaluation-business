@@ -12,7 +12,7 @@ public interface LibraryDao<T> {
 	 * 
 	 * @return
 	 */
-	boolean create();
+	boolean create(T t);
 	
 	/**
 	 * 

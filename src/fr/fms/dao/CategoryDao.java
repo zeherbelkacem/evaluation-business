@@ -7,7 +7,7 @@ import fr.fms.entities.Category;
 public class CategoryDao implements LibraryDao<Category> {
 
 	@Override
-	public boolean create() {
+	public boolean create(Category t) {
 		// TODO Auto-generated method stub
 		return false;
 	}
