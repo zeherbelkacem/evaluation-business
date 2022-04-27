@@ -8,7 +8,7 @@ public class Book {
 	private String editor;
 	private String description;
 	private double unitaryPrice;
-	private Theme themeId;
+	private int themeId;
 	
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class Book {
 	 * @param description
 	 * @param unitaryPrice
 	 */
-	public Book(int id, String title, String author, String editor, String description, double unitaryPrice, Theme idTheme) {
+	public Book(int id, String title, String author, String editor, String description, double unitaryPrice, int idTheme) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -125,11 +125,11 @@ public class Book {
 				+ description + ", unitaryPrice=" + unitaryPrice + "]";
 	}
 
-	public Theme getThemeId() {
+	public int getThemeId() {
 		return themeId;
 	}
 
-	public void setThemeId(Theme themeId) {
+	public void setThemeId(Integer themeId) {
 		this.themeId = themeId;
 	}
 	
