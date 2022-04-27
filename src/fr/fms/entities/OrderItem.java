@@ -4,8 +4,8 @@ public class OrderItem {
 	private int id;
 	private int quantity;
 	private double itemPrice;
-	private Order idOrder;
-	private Book idBook;
+	private int idOrder;
+	private int idBook;
 	
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class OrderItem {
 	 * @param idOrder
 	 * @param idBook
 	 */
-	public OrderItem(int id, int quantity, double itemPrice, Order idOrder, Book idBook) {
+	public OrderItem(int id, int quantity, double itemPrice, int idOrder, int idBook) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
@@ -74,7 +74,7 @@ public class OrderItem {
 		this.itemPrice = itemPrice;
 	}
 
-	public Order getIdOrder() {
+	public int getIdOrder() {
 		return idOrder;
 	}
 
@@ -82,11 +82,11 @@ public class OrderItem {
 	 * 
 	 * @param idOrder
 	 */
-	public void setIdOrder(Order idOrder) {
+	public void setIdOrder(int idOrder) {
 		this.idOrder = idOrder;
 	}
 
-	public Book getIdBook() {
+	public int getIdBook() {
 		return idBook;
 	}
 
@@ -94,7 +94,7 @@ public class OrderItem {
 	 * 
 	 * @param idBook
 	 */
-	public void setIdBook(Book idBook) {
+	public void setIdBook(int idBook) {
 		this.idBook = idBook;
 	}
 

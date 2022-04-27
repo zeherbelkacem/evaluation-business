@@ -10,6 +10,9 @@ public class Book {
 	private double unitaryPrice;
 	private int themeId;
 	
+	//To manipulate cart for later
+	private int quantity;
+	
 	/**
 	 * 
 	 */
@@ -34,6 +37,17 @@ public class Book {
 		this.description = description;
 		this.unitaryPrice = unitaryPrice;
 		//this.themeId = idTheme;
+	}
+	
+	public Book(int id, String title, String author, String editor, String description, double unitaryPrice, int quantity) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.editor = editor;
+		this.description = description;
+		this.unitaryPrice = unitaryPrice;
+		this.quantity = quantity;
 	}
 
 	/**
@@ -131,6 +145,14 @@ public class Book {
 
 	public void setThemeId(Integer themeId) {
 		this.themeId = themeId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

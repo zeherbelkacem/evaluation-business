@@ -7,7 +7,7 @@ public class Order {
 	private int id;
 	private Date date;
 	private double amount;
-	private User idUser;
+	private int idUser;
 	
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class Order {
 	 * @param amount
 	 * @param idUser
 	 */
-	public Order(int id, Date date, double amount, User idUser) {
+	public Order(int id, Date date, double amount, int idUser) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -82,7 +82,7 @@ public class Order {
 	 * 
 	 * @return
 	 */
-	public User getIdUser() {
+	public int getIdUser() {
 		return idUser;
 	}
 
@@ -90,7 +90,7 @@ public class Order {
 	 * 
 	 * @param idUser
 	 */
-	public void setIdUser(User idUser) {
+	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
 

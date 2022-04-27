@@ -1,14 +1,15 @@
 package fr.fms.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
-import fr.fms.entities.Book;
+import javax.print.attribute.standard.RequestingUserName;
+
 import fr.fms.entities.User;
 
 public class UserDao implements LibraryDao<User> {
@@ -95,6 +96,28 @@ public class UserDao implements LibraryDao<User> {
 		}
 		return true;
 	}
+
+	public int saveAndGetIdOfUser(User user) {
+		create(user);
+		
+		return getTheLastInsertedId(user);
+	}
+
+	private int getTheLastInsertedId(User user) {
+		int rsIdUser = 0;
+		try (Statement statement = connection.createStatement()) {
+			try (ResultSet resultSet = statement.executeQuery("SELECT MAX(idUser) FROM t_users")) {
+
+				while (resultSet.next()) {
+					rsIdUser = resultSet.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rsIdUser;
+	}
+
 
 
 }

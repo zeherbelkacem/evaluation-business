@@ -25,4 +25,20 @@ public class DaoFactory {
 	public static ThemeDao getThemeDao() {
 		 return new ThemeDao();
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static OrderDao getOrderDao() {
+		return new OrderDao();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static OrderItemDao getOrderItemDao() {
+		return new OrderItemDao();
+	}
 }
