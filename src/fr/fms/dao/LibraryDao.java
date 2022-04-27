@@ -30,8 +30,9 @@ public interface LibraryDao<T> {
 	/**
 	 * 
 	 * @param t
+	 * @return 
 	 */
-	void update(T t);
+	boolean update(T t);
 	
 	/**
 	 * 

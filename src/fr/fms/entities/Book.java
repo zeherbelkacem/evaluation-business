@@ -25,7 +25,7 @@ public class Book {
 	 * @param description
 	 * @param unitaryPrice
 	 */
-	public Book(int id, String title, String author, String editor, String description, double unitaryPrice, int idTheme) {
+	public Book(int id, String title, String author, String editor, String description, double unitaryPrice) {//, int idTheme) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -33,7 +33,7 @@ public class Book {
 		this.editor = editor;
 		this.description = description;
 		this.unitaryPrice = unitaryPrice;
-		this.themeId = idTheme;
+		//this.themeId = idTheme;
 	}
 
 	/**
