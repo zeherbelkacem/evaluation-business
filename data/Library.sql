@@ -28,7 +28,6 @@ INSERT INTO T_Themes ( ThemeName ) VALUES ( 'roman' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'petit-prix' );
 INSERT INTO T_Themes ( ThemeName ) VALUES ( 'meilleures ventes' );
 
-
 -- -----------------------------------------------------------------------------
 -- - T_Books                         ---
 -- -----------------------------------------------------------------------------
@@ -41,19 +40,15 @@ CREATE TABLE T_Books (
 	UnitaryPrice		float(8, 2)	NOT NULL DEFAULT 0
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleOne', 'AuthorOne', 'EditorOne', 'DescriptionOne', 20 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTwo', 'AuthorTwo', 'EditorTwo', 'DescriptionTwo', 19 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleThree', 'AuthorThree', 'EditorThree', 'DescriptionThree', 20.5 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleFour', 'AuthorFour', 'EditorFour', 'DescriptionFour', 22.9 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleFive', 'AuthorFive', 'EditorFive', 'DescriptionFive', 15.5 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleSix', 'AuthorSix', 'EditorSix', 'DescriptionSix', 18 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleSeven', 'AuthorSeven', 'EditorSeven', 'DescriptionSeven', 17.9 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleEight', 'AuthorEight', 'EditorEight', 'DescriptionEight', 21.9 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleNine', 'AuthorNine', 'EditorNine', 'DescriptionNine', 16.9 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTen', 'AuthorTen', 'EditorTen', 'DescriptionTen', 13.5);
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleEleven', 'AuthorEleven', 'EditorEleven', 'DescriptionEleven', 9.9 );
-INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'TitleTwelve', 'AuthorTwelve', 'EditorTwelve', 'DescriptionTwelve', 8.5 );
-
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Voyager en Famille', 'Voyager en Famille', 'Hachette ', 'Voici un livre qu...', 20 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Le monde - 2ed', 'Lonely planet fr', 'Lonely Planet', '221 destinations, de A... ', 19 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Le Club des Cinq', 'Enid Blyton', 'Nouvelle Bibliotheque', 'est une serie de...', 20.5 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Elisabeth T22', 'Any gays', 'Albin Michel', 'Angelique et Mme de', 22.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Mieux manger', 'Mariotte Laurent', 'Solar', ' manger sans se rui...', 15.5 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Les fleurs du mal', 'Baudelaire', 'Auguste', 'Description', 18 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Paroles', 'Jacques Prevert', 'wLe Point', ' est un recueil de 91...', 17.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'la nuit du faune', 'Romain Lucazeau', 'Albin Michel', 'Au sommet d’une...', 21.9 );
+INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES ( 'Tout quitter', 'Anais Vanel', 'FLAMMARION', 'Un jour j''ai achete', 16.9 );
 
 -- -----------------------------------------------------------------------------
 -- - T_Books_T_Themes_Association                        ---
@@ -61,10 +56,9 @@ INSERT INTO T_Books ( Title, Author, Editor, Description, UnitaryPrice ) VALUES 
 CREATE TABLE T_Books_Themes_Association (
 	IdBook			int(4) NOT NULL		REFERENCES T_Books(IdBook),
 	IdTheme			int(4) NOT NULL		REFERENCES T_Themes(IdTheme)
-	
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Books_Themes_Association VALUES (1, 1 ), (1, 3), (2, 1), (2, 8), (3, 5), (4, 6), (4, 8), (5, 1), (6, 2), (6, 1), (7, 7), (8, 3), (9, 4), (9,2), (10, 1), (11, 5), (12, 3);
+INSERT INTO T_Books_Themes_Association VALUES (1, 1 ), (1, 8), (2, 1), (3, 2), (3, 9), (4, 2), (5, 3), (5, 1), (5, 8), (6, 4), (6, 9), (6, 7), (7, 4), (7, 9), (8,5), (9, 1), (9, 7), (9, 9);
 
 
 -- -----------------------------------------------------------------------------
@@ -73,8 +67,8 @@ INSERT INTO T_Books_Themes_Association VALUES (1, 1 ), (1, 3), (2, 1), (2, 8), (
 CREATE TABLE T_Users (
 	IdUser					int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Name					varchar(30)	NOT NULL,
-	Email					varchar(30)	NOT NULL,
-	Phone					varchar(30)	NOT NULL,
+	Email					varchar(30)	NOT NULL UNIQUE,
+	Phone					varchar(30)	NOT NULL UNIQUE,
 	Address					varchar(30)	NOT NULL
 ) ENGINE = InnoDB;
 
@@ -92,8 +86,8 @@ INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Caroline', 'carolin
 CREATE TABLE T_Orders (
 	IdOrder				  int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Date				  date,
-	Amount 				  float(8,2) NOT NULL,
-	IdUser 				  int(4) NOT NULL,
+	Amount 				  float(8,2)    NOT NULL,
+	IdUser 				  int(4)		NOT NULL,
 	CONSTRAINT `fk_user`
     FOREIGN KEY (IdUser) REFERENCES T_Users (IdUser)
 ) ENGINE = InnoDB;
@@ -103,10 +97,10 @@ CREATE TABLE T_Orders (
 -- -----------------------------------------------------------------------------
 CREATE TABLE T_OrderItems (
 	IdOrderItem			int(4)		PRIMARY KEY AUTO_INCREMENT,
-	Quantity			int(4) NOT NULL,
-	ItemPrice 			float(8,2) NOT NULL,
-	IdOrder				int(4) NOT NULL,
-	IdBook				int(4) NOT NULL,
+	Quantity			int(4) 		NOT NULL,
+	ItemPrice 			float(8,2)	NOT NULL,
+	IdOrder				int(4) 		NOT NULL,
+	IdBook				int(4) 		NOT NULL,
 	CONSTRAINT `fk_book`
     FOREIGN KEY (IdBook) REFERENCES T_Books (IdBook),
     CONSTRAINT `fk_order`

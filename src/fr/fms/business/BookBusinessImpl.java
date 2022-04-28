@@ -14,8 +14,6 @@ import fr.fms.dao.BookDao;
 import fr.fms.dao.DaoFactory;
 import fr.fms.dao.LibraryDao;
 import fr.fms.dao.OrderDao;
-import fr.fms.dao.OrderItemDao;
-import fr.fms.dao.ThemeDao;
 import fr.fms.dao.UserDao;
 import fr.fms.entities.Book;
 import fr.fms.entities.Order;
@@ -195,7 +193,7 @@ public class BookBusinessImpl implements BookBusiness {
 		int userId = 0;
 		List<User> users = userDao.readAll();
 		for (User u : users) {
-			if (u.getName().equalsIgnoreCase(user.getName()) && u.getPhone().equalsIgnoreCase(user.getPhone())) {
+			if (u.getEmail().equalsIgnoreCase(user.getEmail()) && u.getPhone().equalsIgnoreCase(user.getPhone())) {
 				userId = u.getId();
 			}
 		}
@@ -206,6 +204,11 @@ public class BookBusinessImpl implements BookBusiness {
 	public String adminAuthentication(User user) {
 //		 select t_roles.role from t_roles left outer join t_users_roles on t_users_roles.idrole=t_roles.idrole left outer join t_users on t_users_roles.iduser= t_users.iduser where t_users.name='admin1';
 		return null;
+	}
+
+	@Override
+	public List<Book> getBookThemesDetails(int idTheme) {
+		return ((BookDao) bookDao).getBookThemesDetails(idTheme);
 	}
 
 }

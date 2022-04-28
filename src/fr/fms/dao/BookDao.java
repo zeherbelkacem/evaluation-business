@@ -33,9 +33,7 @@ public class BookDao implements LibraryDao<Book> {
 	@Override
 	public List<Book> readAll() {
 		List<Book> books = new ArrayList<Book>();
-		// db connection
-		// Connection connection = connect.connection();
-		//
+
 		try (Statement statement = connection.createStatement()) {
 			try (ResultSet resultSet = statement.executeQuery("SELECT *FROM t_books")) {
 
@@ -162,7 +160,8 @@ public class BookDao implements LibraryDao<Book> {
 
 		try (Statement statement = connection.createStatement()) {
 			try (ResultSet resultSet = statement.executeQuery(
-					"select t_books.idbook, t_books.title, t_books.author, t_books.editor, t_books.description, t_books.unitaryprice from t_books left outer join t_books_themes_association on t_books_themes_association.idbook=t_books.idbook left outer join t_themes on t_books_themes_association.idtheme= t_themes.idtheme where t_themes.idtheme="+themeId+";")) {
+					"select t_books.idbook, t_books.title, t_books.author, t_books.editor, t_books.description, t_books.unitaryprice from t_books left outer join t_books_themes_association on t_books_themes_association.idbook=t_books.idbook left outer join t_themes on t_books_themes_association.idtheme= t_themes.idtheme where t_themes.idtheme="
+							+ themeId + ";")) {
 
 				while (resultSet.next()) {
 					int rsId = resultSet.getInt(1);
@@ -202,6 +201,30 @@ public class BookDao implements LibraryDao<Book> {
 		}
 		return false;
 
+	}
+
+	public List<Book> getBookThemesDetails(int idTheme) {
+		List<Book> books = new ArrayList<Book>();
+
+		try (Statement statement = connection.createStatement()) {
+			try (ResultSet resultSet = statement.executeQuery(
+					"select t_books.idbook, t_books.title, t_books.author, t_themes.themeName from t_books left outer join t_books_themes_association on t_books_themes_association.idbook=t_books.idbook left outer join t_themes on t_books_themes_association.idtheme= t_themes.idtheme where t_books.idbook="
+							+ idTheme + ";")) {
+
+				while (resultSet.next()) {
+					int rsId = resultSet.getInt(1);
+					String rsTitle = resultSet.getString(2);
+					String rsAuthor = resultSet.getString(3);
+					String rsTheme = resultSet.getString(4);
+					
+					books.add(new Book(rsId, rsTitle  , rsAuthor, rsTheme, null, 0));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return books;
 	}
 
 }

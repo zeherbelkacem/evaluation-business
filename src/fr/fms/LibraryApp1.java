@@ -10,13 +10,12 @@ import fr.fms.entities.Theme;
 import fr.fms.entities.User;
 
 /**
- * L'aaplicaion, dans un premier temps doit permettre aux
- * utilisateurs de visualiser l’ensemble des livres classés ou pas par
- * thématiques puis la possibilité à tout instant d’ajouter des livres à un
- * panier, supprimer ou afficher son contenu puis passer commande, il faudra
- * vérifier que le client existe bien en base ou le créer pour passer commande,
- * elle est caractérisée par son id, montant total, date du jour, id du client
- * associé.
+ * L'aaplicaion, dans un premier temps doit permettre aux utilisateurs de
+ * visualiser l’ensemble des livres classés ou pas par thématiques puis la
+ * possibilité à tout instant d’ajouter des livres à un panier, supprimer ou
+ * afficher son contenu puis passer commande, il faudra vérifier que le client
+ * existe bien en base ou le créer pour passer commande, elle est caractérisée
+ * par son id, montant total, date du jour, id du client associé.
  * 
  * @author Stagiaires11P
  *
@@ -34,7 +33,7 @@ public class LibraryApp1 {
 	private static BookBusiness business = new BookBusinessImpl(null);
 
 	/**
-	 *Garder un identifiant pour l'utilsateur 
+	 * Garder un identifiant pour l'utilsateur
 	 */
 	private static int userId = 0;
 
@@ -55,29 +54,31 @@ public class LibraryApp1 {
 
 	/**
 	 * Affiche tous les livre à l'ouverture de l'appli
+	 * 
 	 * @param books
 	 */
 	private static void showAllBooks(List<Book> books) {
 		// Build the table header
 		System.out.println(
-				"--------------------------------------------------------------------------------------------------");
+				"-----------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println(
-				"|ID  | TITLE        | Author           | Editor          | DESCRIPTION                |PRICE (€) |");
+				"|ID  | TITLE                       | Author                     | Editor                    | DESCRIPTION                          |PRICE (€) |");
 		System.out.println(
-				"-----+--------------+------------------+-----------------+----------------------------+----------+");//
+				"-----+-----------------------------+----------------------------+---------------------------+--------------------------------------+----------+");//
 
 		/* * Display the table body: Browse the training HashMap */
 		for (Book b : books) {
-			System.out.println(String.format("|%-4s|%-14s|%-18s|%-17s|%-28s|%-10s|", b.getId(), b.getTitle(),
+			System.out.println(String.format("|%-4s|%-29s|%-28s|%-27s|%-38s|%-10s|", b.getId(), b.getTitle(),
 					b.getAuthor(), b.getEditor(), b.getDescription(), b.getUnitaryPrice()));
 			System.out.println(
-					"-----+--------------+------------------+-----------------+----------------------------+----------+");
+					"-----+-----------------------------+----------------------------+---------------------------+--------------------------------------+----------+");
 		}
 
 	}
 
 	/**
 	 * Affcihe le menu des choix utilisateur
+	 * 
 	 * @param userId
 	 */
 	private static void libraryMenu() {
@@ -90,6 +91,7 @@ public class LibraryApp1 {
 						+ "Pour RETIRER un livre dans le PANIER                   enter (3)\n"
 						+ "Pour AFFICHER et VALIDER le PANIER,                    enter (4)\n"
 						+ "ADMINISTRATION                                         enter (5)\n"
+						+ "Afficher un liver avec détails                         enter (6)\n"
 						+ "SORTIR de l'application,                               enter (0)\n"
 						+ "----------------------------------------------------------------");
 
@@ -111,13 +113,18 @@ public class LibraryApp1 {
 					break;
 
 				case 4:
-					validateMyCart();
+					if (!business.getMyCart().isEmpty())
+						validateMyCart();
+					else 
+						System.out.println("Votre panier est vide");
 					break;
 
 				case 5:
 					autehticateAdmin();
 					break;
-
+				case 6:
+					showBookDetails();
+					break;
 				case 0:
 					menuChoice = 0;
 					break;
@@ -129,6 +136,27 @@ public class LibraryApp1 {
 				System.out.println(e.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * Affiche le détail d'un livre recherché
+	 */
+	private static void showBookDetails() {
+		int idTheme = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de livre concernée!");
+		List<Book> books = business.getBookThemesDetails(idTheme);
+		System.out.println("------+----------------------------------+----------------------------------+----------------------------------+");
+		System.out.println("|ID   | title                            | author                           | THEMATIQUES                      |");
+		System.out.println("------+----------------------------------+----------------------------------+----------------------------------+");//
+
+		
+		System.out.println(String.format("|%-5s|%-34s|%-34s|", books.get(0).getId(), books.get(0).getTitle(), books.get(0).getAuthor()));
+		System.out.println("------+----------------------------------+----------------------------------+");//
+		/* * Display the table body: Browse the training HashMap */
+		for (Book t : books) {
+			System.out.println(String.format("|%-75s|%-34s|", "", t.getEditor()));
+			System.out.println("+                                                                           +----------------------------------+");
+		}
+		
 	}
 
 	/**
@@ -220,11 +248,11 @@ public class LibraryApp1 {
 		if (saving == 1) {
 			System.out.println("Connectez-vous afin de passer la commande ");
 
-			System.out.println("Entrez votre NOM:");
-			String userName = scanner.next();
-			System.out.println("Entrez votre téléphone:");
+			System.out.println("Entrez votre Email:");
+			String email = scanner.next();
+			System.out.println("Entrez votre Téléphone:");
 			String phone = scanner.next();
-			userId = business.userAuthentication(new User(0, userName, null, phone, null));
+			userId = business.userAuthentication(new User(0, null, email, phone, null));
 			if (userId != 0)
 				finalizeOrder();
 
@@ -237,7 +265,8 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * Après l'authentification de l'utilsateur, on passe la commande et on l'enregistre dans la DB 
+	 * Après l'authentification de l'utilsateur, on passe la commande et on
+	 * l'enregistre dans la DB
 	 */
 	private static void finalizeOrder() {
 		showFinalCart();
@@ -271,14 +300,15 @@ public class LibraryApp1 {
 	private static void showFinalCart() {
 		showTheAddedBook(business.getMyCart());
 		double amount = business.getTotalAmount();
-		System.out.println(String.format("|%-19s|%86s|", "TOTAL AMOUNT", amount));
+		System.out.println(String.format("|%-34s|%117s|", "TOTAL AMOUNT", amount));
 		System.out.println(
-				"-----+--------------+------------------+-----------------+----------------------------+----------+----------+");
+				"+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
 
 	}
 
 	/**
 	 * Formulaire d'ajout d'un client
+	 * 
 	 * @return
 	 */
 	private static int saveANewCustomer() {
@@ -321,6 +351,7 @@ public class LibraryApp1 {
 
 	/**
 	 * Affiche le panier à l'utilisateur à chaque ajout de livre
+	 * 
 	 * @param book
 	 */
 	private static void showTheAddedBook(List<Book> book) {
@@ -329,25 +360,26 @@ public class LibraryApp1 {
 			System.out.println("Votre pnier est VIDE");
 		else {
 			System.out.println(
-					"-------------------------------------------------------------------------------------------------------------");
+					"----------------------------------------------------------------------------------------------------------------------------------------------------------");
 			System.out.println(
-					"|ID  | TITLE        | Author           | Editor          | DESCRIPTION                |QUANTITY |PRICE (€) |");
+					"|ID  | TITLE                       | Author                     | Editor                    | DESCRIPTION                          |QUANTITY  |PRICE (€) |");
 			System.out.println(
-					"-----+--------------+------------------+-----------------+----------------------------+----------+----------+");//
+					"-----+-----------------------------+----------------------------+---------------------------+--------------------------------------+----------+----------+");//
 
 			/* Start to fill the table body with the selected training */
 			for (Book b : book) {
-				System.out.println(String.format("|%-4s|%-14s|%-18s|%-17s|%-28s|%-10s|%-10s|", b.getId(), b.getAuthor(),
+				System.out.println(String.format("|%-4s|%-29s|%-28s|%-27s|%-38s|%-10s|%-10s|", b.getId(), b.getAuthor(),
 						b.getAuthor(), b.getEditor(), b.getDescription(), b.getQuantity(), b.getUnitaryPrice()));
 				System.out.println(
-						"-----+--------------+------------------+-----------------+----------------------------+----------+----------+");
+						"-----+-----------------------------+----------------------------+---------------------------+--------------------------------------+----------+----------+");
 			}
 		}
 
 	}
 
 	/**
-	 * Gestion d'erruer de flux entrée sortie 
+	 * Gestion d'erruer de flux entrée sortie
+	 * 
 	 * @param scanner2
 	 * @param string
 	 * @return un 1 ou 2
@@ -370,6 +402,7 @@ public class LibraryApp1 {
 
 	/**
 	 * Affiche tous le thématiques concernant les livres
+	 * 
 	 * @param allThemes
 	 */
 	private static void showAllThemes(List<Theme> allThemes) {
@@ -387,6 +420,7 @@ public class LibraryApp1 {
 
 	/**
 	 * Gestion d'erreurs de flux entrée sortie
+	 * 
 	 * @param scanner
 	 * @param string
 	 * @return un nombre positif (>0)

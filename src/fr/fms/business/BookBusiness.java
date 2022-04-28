@@ -103,4 +103,11 @@ public interface BookBusiness {
 	 */
 	public String adminAuthentication(User user);
 
+	/**
+	 * Renvoie le détails du livre avec ses thematiques
+	 * @param idTheme
+	 * @return
+	 */
+	public List<Book> getBookThemesDetails(int idTheme);
+
 }

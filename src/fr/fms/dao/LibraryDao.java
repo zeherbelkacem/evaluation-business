@@ -3,6 +3,8 @@ package fr.fms.dao;
 import java.sql.Connection;
 import java.util.List;
 
+import fr.fms.entities.Book;
+
 public interface LibraryDao<T> {
 	
 	/* Get sql connection*/
@@ -40,6 +42,8 @@ public interface LibraryDao<T> {
 	 * @return
 	 */
 	boolean delete(int id);
+
+	
 	
 
 }
