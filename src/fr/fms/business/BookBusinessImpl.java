@@ -12,6 +12,7 @@ import java.util.Map;
 
 import fr.fms.dao.BookDao;
 import fr.fms.dao.DaoFactory;
+import fr.fms.dao.LibraryDao;
 import fr.fms.dao.OrderDao;
 import fr.fms.dao.OrderItemDao;
 import fr.fms.dao.ThemeDao;
@@ -24,11 +25,11 @@ import fr.fms.entities.User;
 
 public class BookBusinessImpl implements BookBusiness {
 
-	private BookDao bookDao = DaoFactory.getBookDao();
-	private ThemeDao themeDao = DaoFactory.getThemeDao();
-	private UserDao userDao = DaoFactory.getUserDao();
-	private OrderDao orderDao = DaoFactory.getOrderDao();
-	private OrderItemDao orderItemDao = DaoFactory.getOrderItemDao();	
+	private LibraryDao<Book> bookDao = DaoFactory.getBookDao();
+	private LibraryDao<Theme> themeDao = DaoFactory.getThemeDao();
+	private LibraryDao<User> userDao = DaoFactory.getUserDao();
+	private LibraryDao<Order> orderDao = DaoFactory.getOrderDao();
+	private LibraryDao<OrderItem> orderItemDao = DaoFactory.getOrderItemDao();	
 	
 	private Map<Integer, Book> myCartMap;
 
@@ -44,7 +45,7 @@ public class BookBusinessImpl implements BookBusiness {
 	@Override
 	public List<Book> getAllBooksByTheme(int themeId) {
 
-		return bookDao.getAllBooksByTheme(themeId);
+		return ((BookDao) bookDao).getAllBooksByTheme(themeId);
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class BookBusinessImpl implements BookBusiness {
 		 * start by save a default parent row (order)
 		 */
 		orderDao.create(new Order(0, null, getTotalAmount(), idUser));
-		int lastOrderId = orderDao.getLastOrderId();
+		int lastOrderId = ((OrderDao) orderDao).getLastOrderId();
 		
 		/* each line in the bucket corresponds to an item in the order table */
 		for(Book book: myCartMap.values()) 
@@ -119,7 +120,7 @@ public class BookBusinessImpl implements BookBusiness {
 
 	@Override
 	public void loadInvoice(int idOrder) {
-		List<String[]> invoiceElement = orderDao.getInvoice(idOrder);
+		List<String[]> invoiceElement = ((OrderDao) orderDao).getInvoice(idOrder);
 
 		String invoiceNumber = String.valueOf(Integer.parseInt(invoiceElement.get(0)[0]) + 10000);
 		String date = invoiceElement.get(0)[2];
@@ -186,7 +187,7 @@ public class BookBusinessImpl implements BookBusiness {
 
 	@Override
 	public int saveANewUser(User user) {
-		return userDao.saveAndGetIdOfUser(user);
+		return ((UserDao) userDao).saveAndGetIdOfUser(user);
 	}
 
 	@Override
@@ -203,7 +204,7 @@ public class BookBusinessImpl implements BookBusiness {
 
 	@Override
 	public String adminAuthentication(User user) {
-		 select t_roles.role from t_roles left outer join t_users_roles on t_users_roles.idrole=t_roles.idrole left outer join t_users on t_users_roles.iduser= t_users.iduser where t_users.name='admin1';
+//		 select t_roles.role from t_roles left outer join t_users_roles on t_users_roles.idrole=t_roles.idrole left outer join t_users on t_users_roles.iduser= t_users.iduser where t_users.name='admin1';
 		return null;
 	}
 

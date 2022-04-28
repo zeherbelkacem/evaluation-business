@@ -2,8 +2,8 @@ package fr.fms;
 
 import fr.fms.dao.BookDao;
 import fr.fms.dao.DaoFactory;
+import fr.fms.dao.LibraryDao;
 import fr.fms.dao.ThemeDao;
-import fr.fms.dao.UserDao;
 import fr.fms.entities.Book;
 import fr.fms.entities.Theme;
 import fr.fms.entities.User;
@@ -13,7 +13,7 @@ public class TestBook {
 	public static void main(String[] args) {
 
 		/***************************** BookDao test ************************/
-		BookDao bookDao = DaoFactory.getBookDao();
+		LibraryDao<Book> bookDao = DaoFactory.getBookDao();
 		// create
 //		 bookDao.create(new Book(0, "titlethirteen", "authorThirteen",
 //		 "editorThirteen", "descriptionThirteen", 0));
@@ -41,12 +41,12 @@ public class TestBook {
 //		});
 		
 		//real all by theme
-		bookDao.getAllBooksByTheme(1).forEach(b -> {
+		((BookDao) bookDao).getAllBooksByTheme(1).forEach(b -> {
 			System.out.println(b.toString());
 		});
 			
 		/***************************** UserDao TEST ************************/
-		UserDao userDao = DaoFactory.getUserDao();
+		LibraryDao<User> userDao = DaoFactory.getUserDao();
 		
 		//read all
 //		userDao.readAll().forEach(u->{
@@ -66,7 +66,7 @@ public class TestBook {
 //		System.out.println(userDao.readById(8));
 		
 		/***************************** ThemeDao TEST ************************/
-		ThemeDao themeDao = DaoFactory.getThemeDao();
+		ThemeDao themeDao = (ThemeDao) DaoFactory.getThemeDao();
 		//read all
 		themeDao.readAll().forEach(t->{
 			System.out.println(t.toString());

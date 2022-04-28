@@ -105,13 +105,7 @@ public class LibraryApp1 {
 					break;
 
 				case 5:
-					System.out.println("Entrez votre NOM:");
-					String userName = scanner.next();
-					System.out.println("Entrez votre téléphone:");
-					String phone = scanner.next();
-					role = business.adminAuthentication(new User(0, userName, null, phone, null));
-					if (role.equalsIgnoreCase("admin"))
-						adminMenu();
+					autehticateAdmin();
 					break;
 
 				case 0:
@@ -125,6 +119,20 @@ public class LibraryApp1 {
 				System.out.println(e.getMessage());
 			}
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private static void autehticateAdmin() {
+		System.out.println("Entrez votre NOM:");
+		String userName = scanner.next();
+		System.out.println("Entrez votre téléphone:");
+		String phone = scanner.next();
+		role = business.adminAuthentication(new User(0, userName, null, phone, null));
+		if (role.equalsIgnoreCase("admin"))
+			adminMenu();
+		
 	}
 
 	private static void adminMenu() {
