@@ -10,6 +10,13 @@ import fr.fms.entities.Theme;
 import fr.fms.entities.User;
 
 /**
+ * L'aaplicaion, dans un premier temps doit permettre aux
+ * utilisateurs de visualiser l’ensemble des livres classés ou pas par
+ * thématiques puis la possibilité à tout instant d’ajouter des livres à un
+ * panier, supprimer ou afficher son contenu puis passer commande, il faudra
+ * vérifier que le client existe bien en base ou le créer pour passer commande,
+ * elle est caractérisée par son id, montant total, date du jour, id du client
+ * associé.
  * 
  * @author Stagiaires11P
  *
@@ -17,19 +24,22 @@ import fr.fms.entities.User;
 public class LibraryApp1 {
 
 	/**
-	 * 
+	 * Flux entrée/sortie
 	 */
 	private static Scanner scanner = new Scanner(System.in);
 
+	/**
+	 * instantiation de l'objet de la couche metier
+	 */
 	private static BookBusiness business = new BookBusinessImpl(null);
 
 	/**
-	 *
+	 *Garder un identifiant pour l'utilsateur 
 	 */
 	private static int userId = 0;
 
 	/**
-	 *
+	 * Un role pour définir les droit des utilisateur
 	 */
 	private static String role = null;
 
@@ -44,8 +54,8 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
-	 * @param articles
+	 * Affiche tous les livre à l'ouverture de l'appli
+	 * @param books
 	 */
 	private static void showAllBooks(List<Book> books) {
 		// Build the table header
@@ -58,7 +68,7 @@ public class LibraryApp1 {
 
 		/* * Display the table body: Browse the training HashMap */
 		for (Book b : books) {
-			System.out.println(String.format("|%-4s|%-14s|%-18s|%-17s|%-28s|%-10s|", b.getId(), b.getAuthor(),
+			System.out.println(String.format("|%-4s|%-14s|%-18s|%-17s|%-28s|%-10s|", b.getId(), b.getTitle(),
 					b.getAuthor(), b.getEditor(), b.getDescription(), b.getUnitaryPrice()));
 			System.out.println(
 					"-----+--------------+------------------+-----------------+----------------------------+----------+");
@@ -67,7 +77,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Affcihe le menu des choix utilisateur
 	 * @param userId
 	 */
 	private static void libraryMenu() {
@@ -122,7 +132,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Envoie l'admin à l'authentification
 	 */
 	private static void autehticateAdmin() {
 		System.out.println("Entrez votre NOM:");
@@ -132,9 +142,12 @@ public class LibraryApp1 {
 		role = business.adminAuthentication(new User(0, userName, null, phone, null));
 		if (role.equalsIgnoreCase("admin"))
 			adminMenu();
-		
+
 	}
 
+	/**
+	 * Affiche le menu d'actions à réaliser par l'admin
+	 */
 	private static void adminMenu() {
 		int menuChoice = -1;
 		while (menuChoice != 0) { // (0) to exit menu
@@ -189,7 +202,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Affiche la liste des livre choisis par thématique
 	 */
 	private static void showBooksByTeme() {
 		showAllThemes(business.getAllThemes());
@@ -199,7 +212,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Valide le panier avant de finaliser la commande
 	 */
 	private static void validateMyCart() {
 		/* Check if the user is already a customer */
@@ -224,7 +237,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Après l'authentification de l'utilsateur, on passe la commande et on l'enregistre dans la DB 
 	 */
 	private static void finalizeOrder() {
 		showFinalCart();
@@ -253,7 +266,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Récupere le panier et l'affiche
 	 */
 	private static void showFinalCart() {
 		showTheAddedBook(business.getMyCart());
@@ -264,6 +277,10 @@ public class LibraryApp1 {
 
 	}
 
+	/**
+	 * Formulaire d'ajout d'un client
+	 * @return
+	 */
 	private static int saveANewCustomer() {
 		System.out.println("Votre Nom");
 		String userName = scanner.next();
@@ -278,7 +295,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Ajout d'un livre au panier
 	 */
 	private static void addBookToCart() {
 		showAllBooks(business.getAllBooks());
@@ -289,7 +306,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Supprime un livre(s) du panier
 	 */
 	private static void removeBookFromCart() {
 		if (!business.getMyCart().isEmpty()) {
@@ -303,7 +320,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Affiche le panier à l'utilisateur à chaque ajout de livre
 	 * @param book
 	 */
 	private static void showTheAddedBook(List<Book> book) {
@@ -330,10 +347,10 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Gestion d'erruer de flux entrée sortie 
 	 * @param scanner2
 	 * @param string
-	 * @return
+	 * @return un 1 ou 2
 	 */
 	private static int getPositiveOneOrTwo(Scanner scanner2, String string) {
 		String menuresponse = "";
@@ -352,7 +369,7 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Affiche tous le thématiques concernant les livres
 	 * @param allThemes
 	 */
 	private static void showAllThemes(List<Theme> allThemes) {
@@ -369,10 +386,10 @@ public class LibraryApp1 {
 	}
 
 	/**
-	 * 
+	 * Gestion d'erreurs de flux entrée sortie
 	 * @param scanner
 	 * @param string
-	 * @return
+	 * @return un nombre positif (>0)
 	 */
 	private static long getPositiveIntegerInput(Scanner scanner, String string) {
 		String menuresponse = "";
