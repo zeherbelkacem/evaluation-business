@@ -72,13 +72,13 @@ public class BookBusinessImpl implements BookBusiness {
 
 	@Override
 	public boolean removeBookFromcart(int bookId) {
-		if (!myCartMap.isEmpty()) {
+		if (!myCartMap.isEmpty() && myCartMap.containsKey(bookId)) {
 			if (myCartMap.get(bookId).getQuantity() > 1)
 				myCartMap.get(bookId).setQuantity(myCartMap.get(bookId).getQuantity() - 1);
 			else
 				myCartMap.remove(bookId);
 			return true;
-		}
+		}else System.out.println("L'ID saisi est inexistant dans le panier");
 		return false;
 	}
 
@@ -193,7 +193,7 @@ public class BookBusinessImpl implements BookBusiness {
 		int userId = 0;
 		List<User> users = userDao.readAll();
 		for (User u : users) {
-			if (u.getEmail().equalsIgnoreCase(user.getEmail()) && u.getPhone().equalsIgnoreCase(user.getPhone())) {
+			if (u.getEmail().equalsIgnoreCase(user.getEmail()) && u.getPassword().equalsIgnoreCase(user.getPassword())) {
 				userId = u.getId();
 			}
 		}

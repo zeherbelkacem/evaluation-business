@@ -207,17 +207,19 @@ public class BookDao implements LibraryDao<Book> {
 		List<Book> books = new ArrayList<Book>();
 
 		try (Statement statement = connection.createStatement()) {
+//			try (ResultSet resultSet = statement.executeQuery(
+//					"select t.idbook, t.title, t.author, t_themes.themeName from t_books AS t left outer join t_books_themes_association on t_books_themes_association.idbook=t.idbook left outer join t_themes on t_books_themes_association.idtheme= t_themes.idtheme where t.idbook="
+//							+ idTheme + ";")) {
 			try (ResultSet resultSet = statement.executeQuery(
-					"select t_books.idbook, t_books.title, t_books.author, t_themes.themeName from t_books left outer join t_books_themes_association on t_books_themes_association.idbook=t_books.idbook left outer join t_themes on t_books_themes_association.idtheme= t_themes.idtheme where t_books.idbook="
+					"select t.idbook, t.title, t.author, h.themeName from t_books AS t left outer join t_books_themes_association as a on a.idbook=t.idbook left outer join t_themes as h on a.idtheme= h.idtheme where t.idbook="
 							+ idTheme + ";")) {
-
 				while (resultSet.next()) {
 					int rsId = resultSet.getInt(1);
 					String rsTitle = resultSet.getString(2);
 					String rsAuthor = resultSet.getString(3);
 					String rsTheme = resultSet.getString(4);
-					
-					books.add(new Book(rsId, rsTitle  , rsAuthor, rsTheme, null, 0));
+
+					books.add(new Book(rsId, rsTitle, rsAuthor, rsTheme, null, 0));
 				}
 			}
 		} catch (SQLException e) {

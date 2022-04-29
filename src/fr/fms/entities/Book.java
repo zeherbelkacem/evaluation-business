@@ -13,11 +13,7 @@ public class Book {
 	//To manipulate cart for later
 	private int quantity;
 	
-	/**
-	 * 
-	 */
-	public Book() {
-	}
+	
 
 	/**
 	 * 

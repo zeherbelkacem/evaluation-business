@@ -65,20 +65,21 @@ INSERT INTO T_Books_Themes_Association VALUES (1, 1 ), (1, 8), (2, 1), (3, 2), (
 -- - T_Users                         ---
 -- -----------------------------------------------------------------------------
 CREATE TABLE T_Users (
-	IdUser					int(4)		PRIMARY KEY AUTO_INCREMENT,
-	Name					varchar(30)	NOT NULL,
-	Email					varchar(30)	NOT NULL UNIQUE,
-	Phone					varchar(30)	NOT NULL UNIQUE,
-	Address					varchar(30)	NOT NULL
+	IdUser					int(4)			PRIMARY KEY AUTO_INCREMENT,
+	Name					varchar(30)		NOT NULL,
+	Email					varchar(30)		NOT NULL UNIQUE,
+	Password				varchar(30)		NOT NULL UNIQUE,
+	Phone					varchar(30)		NOT NULL UNIQUE,
+	Address					varchar(100)	NOT NULL
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Belkacem', 'belkacem@fms.fr', '0600110022', 'Toulouse 1' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Sarah', 'sarah@fms.fr', '0611002200', 'Toulouse 2' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Christophe', 'christophe@fms.fr', '0600330044', 'Toulouse 3' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Jean Charles', 'jcharles@fms.fr', '0600220033', 'Toulouse 4' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Delmerie', 'delmerie@fms.fr', '0622003300', 'Toulouse 5' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Huho', 'hugo@fms.fr', '0633004400', 'Toulouse 6' );
-INSERT INTO T_Users ( Name, Email, Phone, Address) VALUES ( 'Caroline', 'caroline@fms.fr', '0600440055', 'Toulouse 7' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Belkacem', 'belkacem@fms.fr', '1234', '0600110022', '145 rue La Fayette, 31500 Toulouse' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Sarah', 'sarah@fms.fr', '0234', '0611002200', '174 rue du Faubourg Saint-Denis, 31000 Toulouse' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Christophe', 'christophe@fms.fr', '2234',  '0600330044', '44 rue d''Aboukir, 31200 Toulouse' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Jean Charles', 'jcharles@fms.fr', '3234',  '0600220033', '29 rue Quincampoix, 31400 Toulouse' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Delmerie', 'delmerie@fms.fr', '4234', '0622003300', '3 rue de l''aqueduc, 31770 Colomiers' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Huho', 'hugo@fms.fr', '5234', '0633004400', '141 boulevard Diderot, 31300 Toulouse' );
+INSERT INTO T_Users ( Name, Email, Password, Phone, Address) VALUES ( 'Caroline', 'caroline@fms.fr', '6234', '0600440055', '54 rue des Petites Ecuries, 31000 Toulouse' );
 
 -- -----------------------------------------------------------------------------
 -- - T_Orders                         ---

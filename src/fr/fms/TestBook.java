@@ -23,7 +23,7 @@ public class TestBook {
 		((BookDao) bookDao).getBookThemesDetails(1).forEach(b->{
 			System.out.println(b.toString());
 		});;
-
+	
 		// remove theme from book
 //		bookDao.removeThemeFromBook(6, 3);
 

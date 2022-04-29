@@ -4,14 +4,9 @@ public class User {
 	private int id;
 	private String name;
 	private String email;
+	private String password;
 	private String phone;
 	private String address;
-	
-	/**
-	 * 
-	 */
-	public User() {
-	}
 	
 	/**
 	 * 
@@ -22,12 +17,22 @@ public class User {
 	 * @param address
 	 */
 	public User(int id, String name, String email, String phone, String address) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
+	}
+	
+	public User(int id, String name, String email, String password, String phone, String address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.phone = phone;
+		this.address = address;
+		
 	}
 
 	/**
@@ -109,6 +114,14 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", address=" + address
 				+ "]";
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

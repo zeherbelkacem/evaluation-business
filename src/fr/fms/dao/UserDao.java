@@ -13,12 +13,13 @@ public class UserDao implements LibraryDao<User> {
 
 	@Override
 	public boolean create(User t) {
-		String str = "INSERT INTO T_Users (name, email, phone, address) VALUES (?,?, ?, ?);";
+		String str = "INSERT INTO T_Users (name, email, password, phone, address) VALUES (?,?, ?,?, ?);";
 		try (PreparedStatement ps = connection.prepareStatement(str)){
 			ps.setString(1, t.getName());
-			ps.setString(2, t.getEmail());	
-			ps.setString(3, t.getPhone());
-			ps.setString(4, t.getAddress());	
+			ps.setString(2, t.getEmail());
+			ps.setString(3, t.getPassword());
+			ps.setString(4, t.getPhone());
+			ps.setString(5, t.getAddress());	
 			if( ps.executeUpdate() == 1)	return true;				
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,10 +36,11 @@ public class UserDao implements LibraryDao<User> {
 				while(resultSet.next()) {
 					int rsId = resultSet.getInt(1);	
 					String rsName = resultSet.getString(2);
-					String rsEmail = resultSet.getString(3);	
-					String rsPhone = resultSet.getString(4);
-					String rsAddress = resultSet.getString(5);
-					users.add(new User(rsId, rsName, rsEmail, rsPhone, rsAddress));						
+					String rsEmail = resultSet.getString(3);
+					String rsPassword = resultSet.getString(4);
+					String rsPhone = resultSet.getString(5);
+					String rsAddress = resultSet.getString(6);
+					users.add(new User(rsId, rsName, rsEmail, rsPassword, rsPhone, rsAddress));						
 				}	
 			}
 		} catch (SQLException e) {

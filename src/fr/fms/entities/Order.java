@@ -11,12 +11,6 @@ public class Order {
 	
 	/**
 	 * 
-	 */
-	public Order() {
-	}
-	
-	/**
-	 * 
 	 * @param id
 	 * @param date
 	 * @param amount

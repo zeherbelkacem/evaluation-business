@@ -3,12 +3,6 @@ package fr.fms.entities;
 public class Theme {
 	private int id;
 	private String themeName;
-
-	/**
-	 *
-	 */
-	public Theme() {
-	}
 	
 	/**
 	 * 

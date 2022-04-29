@@ -9,12 +9,6 @@ public class OrderItem {
 	
 	/**
 	 * 
-	 */
-	public OrderItem() {
-	}
-
-	/**
-	 * 
 	 * @param id
 	 * @param quantity
 	 * @param itemPrice
@@ -31,7 +25,7 @@ public class OrderItem {
 	}
 
 	/**
-	 * 
+	 * Retourne l'id de l'objet instancié order 
 	 * @return
 	 */
 	public int getId() {

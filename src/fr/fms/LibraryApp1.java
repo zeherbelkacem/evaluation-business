@@ -10,12 +10,7 @@ import fr.fms.entities.Theme;
 import fr.fms.entities.User;
 
 /**
- * L'aaplicaion, dans un premier temps doit permettre aux utilisateurs de
- * visualiser l’ensemble des livres classés ou pas par thématiques puis la
- * possibilité à tout instant d’ajouter des livres à un panier, supprimer ou
- * afficher son contenu puis passer commande, il faudra vérifier que le client
- * existe bien en base ou le créer pour passer commande, elle est caractérisée
- * par son id, montant total, date du jour, id du client associé.
+ * L'application per
  * 
  * @author Stagiaires11P
  *
@@ -27,6 +22,12 @@ public class LibraryApp1 {
 	 */
 	private static Scanner scanner = new Scanner(System.in);
 
+	/**
+	 * Regular expressions to check entry email correct and phone number entry
+	 * correct
+	 */
+	private static String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+	private static String noSpaceRegex = "^[0-9]{10}$";
 	/**
 	 * instantiation de l'objet de la couche metier
 	 */
@@ -85,13 +86,15 @@ public class LibraryApp1 {
 		int menuChoice = -1;
 		while (menuChoice != 0) { // (0) to exit menu
 			try {
-				System.out.println("-------------------------- STORE MENU --------------------------" + "\n"
+				System.out.println("\n-------------------------- STORE MENU --------------------------" + "\n"
 						+ "Pour afficher les livres PAR THEMEMATIQUE,             enter (1)\n"
 						+ "Pour AJOUTER un livre au PANIER,                       enter (2)\n"
 						+ "Pour RETIRER un livre dans le PANIER                   enter (3)\n"
 						+ "Pour AFFICHER et VALIDER le PANIER,                    enter (4)\n"
-						+ "ADMINISTRATION                                         enter (5)\n"
 						+ "Afficher un liver avec détails                         enter (6)\n"
+						+ "S'ENREGISTER comme client                              enter (7)\n"
+						
+						+ "ADMINISTRATION                                         enter (5)\n"
 						+ "SORTIR de l'application,                               enter (0)\n"
 						+ "----------------------------------------------------------------");
 
@@ -115,7 +118,7 @@ public class LibraryApp1 {
 				case 4:
 					if (!business.getMyCart().isEmpty())
 						validateMyCart();
-					else 
+					else
 						System.out.println("Votre panier est vide");
 					break;
 
@@ -125,8 +128,12 @@ public class LibraryApp1 {
 				case 6:
 					showBookDetails();
 					break;
+				case 7:
+					saveANewCustomer();
+					break;
 				case 0:
 					menuChoice = 0;
+					userId = 0; // LOGOUT: no more clients are connected (session closed)
 					break;
 
 				default:
@@ -144,19 +151,23 @@ public class LibraryApp1 {
 	private static void showBookDetails() {
 		int idTheme = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de livre concernée!");
 		List<Book> books = business.getBookThemesDetails(idTheme);
-		System.out.println("------+----------------------------------+----------------------------------+----------------------------------+");
-		System.out.println("|ID   | title                            | author                           | THEMATIQUES                      |");
-		System.out.println("------+----------------------------------+----------------------------------+----------------------------------+");//
+		System.out.println(
+				"------+----------------------------------+----------------------------------+----------------------------------+");
+		System.out.println(
+				"|ID   | title                            | author                           | THEMATIQUES                      |");
+		System.out.println(
+				"------+----------------------------------+----------------------------------+----------------------------------+");//
 
-		
-		System.out.println(String.format("|%-5s|%-34s|%-34s|", books.get(0).getId(), books.get(0).getTitle(), books.get(0).getAuthor()));
+		System.out.println(String.format("|%-5s|%-34s|%-34s|", books.get(0).getId(), books.get(0).getTitle(),
+				books.get(0).getAuthor()));
 		System.out.println("------+----------------------------------+----------------------------------+");//
 		/* * Display the table body: Browse the training HashMap */
 		for (Book t : books) {
 			System.out.println(String.format("|%-75s|%-34s|", "", t.getEditor()));
-			System.out.println("+                                                                           +----------------------------------+");
+			System.out.println(
+					"+                                                                           +----------------------------------+");
 		}
-		
+
 	}
 
 	/**
@@ -180,7 +191,7 @@ public class LibraryApp1 {
 		int menuChoice = -1;
 		while (menuChoice != 0) { // (0) to exit menu
 			try {
-				System.out.println("-------------------------- STORE MENU --------------------------" + "\n"
+				System.out.println("\n-------------------------- STORE MENU --------------------------" + "\n"
 						+ "Pour afficher les COMMANDES,                           enter (1)\n"
 						+ "Pour afficher UNE SEULE commande,                      enter (2)\n"
 						+ "Pour Afficher les utilisateurs                         enter (3)\n"
@@ -243,24 +254,30 @@ public class LibraryApp1 {
 	 * Valide le panier avant de finaliser la commande
 	 */
 	private static void validateMyCart() {
-		/* Check if the user is already a customer */
-		int saving = getPositiveOneOrTwo(scanner, "Etes vous client chez nous:  ?(1:oui/ 2:non)");
-		if (saving == 1) {
-			System.out.println("Connectez-vous afin de passer la commande ");
+		/* If user is already connected */
+		if (userId != 0)
+			finalizeOrder();
+		else {
+			/* Check if the user is already a customer */
+			int saving = getPositiveOneOrTwo(scanner, "Etes vous client chez nous:  ?(1:oui/ 2:non)");
+			if (saving == 1) {
+				System.out.println("Connectez-vous afin de passer la commande ");
 
-			System.out.println("Entrez votre Email:");
-			String email = scanner.next();
-			System.out.println("Entrez votre Téléphone:");
-			String phone = scanner.next();
-			userId = business.userAuthentication(new User(0, null, email, phone, null));
-			if (userId != 0)
-				finalizeOrder();
+				System.out.println("Entrez votre Email:");
+				String email = scanner.next();
+				System.out.println("Entrez votre Password:");
+				String password = scanner.next();
+				userId = business.userAuthentication(new User(0, null, email, password, null, null));
+				if (userId != 0)
+					finalizeOrder();
 
-		} else {
-			System.out.println("Vous de vez cous enregister avant de passer la commande");
-			userId = saveANewCustomer();
-			if (userId != 0)
-				finalizeOrder();
+			} else {
+				System.out.println("Vous de vez cous enregister avant de passer la commande");
+				userId = saveANewCustomer();
+				if (userId != 0)
+					finalizeOrder();
+			}
+
 		}
 	}
 
@@ -300,7 +317,7 @@ public class LibraryApp1 {
 	private static void showFinalCart() {
 		showTheAddedBook(business.getMyCart());
 		double amount = business.getTotalAmount();
-		System.out.println(String.format("|%-34s|%117s|", "TOTAL AMOUNT", amount));
+		System.out.println(String.format("|%-34s|%117s|", "TOTAL AMOUNT", amount + "   €    "));
 		System.out.println(
 				"+--------------------------------------------------------------------------------------------------------------------------------------------------------+");
 
@@ -312,15 +329,34 @@ public class LibraryApp1 {
 	 * @return
 	 */
 	private static int saveANewCustomer() {
+		String phone = null;
+		String email = null;
+		String password = null;
+		String address = null;
+
 		System.out.println("Votre Nom");
-		String userName = scanner.next();
+		String userName = scanner.nextLine();
+		userName = scanner.nextLine();
 		System.out.println("Votre Email");
-		String email = scanner.next();
-		System.out.println("Votre Numero de téléphone");
-		String phone = scanner.next();
-		System.out.println("Votre Adresse");
-		String address = scanner.next();
-		int userId = business.saveANewUser(new User(0, userName, email, phone, address));
+		email = scanner.next();
+		
+		/*Check email format*/
+		if (email.matches(EMAIL_REGEX)) {
+			System.out.println("Votre Paasword");
+			password = scanner.next();
+			System.out.println("Votre Numero de téléphone");
+			phone = scanner.next();
+			
+			/*Check phone number format*/
+			if (phone.matches(noSpaceRegex)) {
+				System.out.println("Votre Adresse");
+				address = scanner.nextLine();
+				address = scanner.nextLine();
+				userId = business.saveANewUser(new User(0, userName, email, password, phone, address));
+			} else
+				System.out.println("NUMERO DE TELEPHONE INVALIDE");
+		} else
+			System.out.println("Votre Paasword");
 		return userId;
 	}
 
